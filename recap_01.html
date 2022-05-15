@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        *{
+            background-color: black;
+        }
+        h1{
+            color: aliceblue;
+            text-transform: capitalize;
+        }
+    </style>
+
+    <canvas>
+        <h1>canvas</h1>
+    </canvas>
+
+    <script>
+        // canvas java script
+        var canvas = document.querySelector('canvas');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        var c = canvas.getContext('2d');
+
+        //drawing rectangle
+        c.fillStyle = "#ffffff"
+        c.fillRect(100, 100, 100, 100);
+
+        c.beginPath()
+        c.arc(200,100,100,300,Math.PI*2,false)
+        c.strokeStyle = "#fff"
+        c.stroke()
+
+        //get color
+        var randomColor =  "#"+ Math.floor(Math.random()*0xFFFFFF).toString(16)
+
+        c.fillStyle= randomColor
+        c.fillRect(300,300,100,100)
+
+        c.fillRect(500,1000,50,50)
+
+       
+    </script>
+</body>
+</html>

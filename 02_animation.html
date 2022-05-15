@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Canvas</title>
+    <!-- CSS -->
+    <style>
+        *{
+            margin :0;
+        }
+        canvas{
+            background-color: violet;
+        }
+    </style>
+</head>
+<body>
+    <!-- HTML -->
+    <canvas>
+
+    </canvas>
+    <!-- JS -->
+    <script>
+        var canvas = document.querySelector('canvas');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        var c = canvas = canvas.getContext('2d');
+
+        var x = 200;
+        //velocity / dx = x velocity
+        var dx = 4;
+       function animate(){
+       //creating loop
+        requestAnimationFrame(animate);
+        //clear every frame //arguments x,y,width,height
+        c.clearRect(0,0,innerWidth,innerHeight);
+        c.beginPath();
+        c.arc(x,200,30,0,Math.PI*2,false);
+        c.strokeStyle = "darkblue"
+        c.stroke()
+
+        if(x > innerWidth){
+           dx = -dx
+        }
+        x += dx;
+       }
+       animate()
+
+       var bx = 100
+       var by = 100 
+       var dy = 5
+       var radius = 30     
+       bounce=()=>{
+           requestAnimationFrame(bounce)
+           c.beginPath()
+           c.arc(bx,by,30,0,Math.PI*2,false);
+        //    c.strokeStyle = "#"+Math.round(Math.random()*0xFFFFFF).toString(16);
+           c.strokeStyle = "red";
+           c.stroke()
+           if(by+radius > innerHeight || x-radius<0){
+               dy = -dy
+               bx += 200;
+           }
+           by += dy
+       }
+       bounce()
+
+    //    ad more condition radius
+
+       var diagX =  Math.random() * innerWidth;
+       var diagY = Math.random() *  innerHeight;
+       var xVelocity = (Math.random() -0.5 )*5 ;
+       var yVelocity = (Math.random() -0.5 )*5 ;
+       var radius = 30;
+       diagonal=()=>{
+        requestAnimationFrame(diagonal);
+        c.beginPath();
+        c.arc(diagX,diagY,radius,0,Math.PI*2,false);
+        c.strokeStyle = "green";
+        c.stroke()
+        
+        if(diagX + radius > innerWidth || diagX-radius < 0){
+            xVelocity = -xVelocity
+        }
+        if(diagY + radius > innerHeight || diagY - radius < 0){
+            yVelocity = -yVelocity
+        }
+        diagX += xVelocity;
+        diagY += xVelocity
+    }
+
+       diagonal();
+    </script>
+</body>
+</html>

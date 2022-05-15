@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Canvas</title>
+    <!-- CSS -->
+    <style>
+        *{
+            margin :0;
+        }
+        canvas{
+            background-color: violet;
+        }
+    </style>
+</head>
+<body>
+    <!-- HTML -->
+    <canvas>
+
+    </canvas>
+    <!-- JS -->
+    <script>
+        var canvas = document.querySelector('canvas');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        var c = canvas = canvas.getContext('2d');
+
+        // x = Math.random()
+        // y = Math.random()
+        // dx = Math.random() * -0.5
+        
+        x=300
+        y=400
+        radius = 30
+        dx=10
+        dy=10
+      bounceCenter=()=>{
+          requestAnimationFrame(bounceCenter)
+          c.clearRect(0, 0, innerWidth, innerHeight);
+          c.beginPath()
+          c.arc(x,y,radius,0,Math.PI*2,false)
+          c.strokeStyle = 'red'
+          c.stroke()        
+        if( x+radius > innerWidth || x-radius < 0){
+            dx = -dx
+        }
+        if(y+radius > innerHeight || y-radius < 0){
+            dy = -dy
+        }
+        x += dx
+        y += dy  
+
+        console.log(x,y,dx);
+      }
+      bounceCenter()
+    </script>
+</body>
+</html>
