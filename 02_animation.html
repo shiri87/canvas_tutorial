@@ -96,6 +96,17 @@
     }
     var circle = new Circle(200,200,50,6,6);
 
+    var circleArray = [];
+    for(i=0; i < 100; i++)
+    {
+        var diagX =  Math.random() * innerWidth;
+        var diagY = Math.random() *  innerHeight;
+        var xVelocity = (Math.random() -0.5 )*5 ;
+        var yVelocity = (Math.random() -0.5 )*5 ;
+        var radius = 30;
+        circleArray.push(new Circle(diagX,diagY,radius,xVelocity,yVelocity))
+    }
+    console.log(circleArray)
    // circle.draw(); //since the function is out of requestAnimationFrame, It's deleted. put this function inside of animation 
 
     //    var diagX =  Math.random() * innerWidth;
@@ -113,15 +124,19 @@
         c.arc(diagX,diagY,radius,0,Math.PI*2,false);
         c.strokeStyle = "green";
         c.stroke()
+
+        for(i=0; i < circleArray.length; i++){
+         circleArray[i].update()
+        }
         
-        if(diagX + radius > innerWidth || diagX-radius < 0){
-            xVelocity = -xVelocity
-        }
-        if(diagY + radius > innerHeight || diagY - radius < 0){
-            yVelocity = -yVelocity
-        }
-        diagX += xVelocity;
-        diagY += xVelocity
+        // if(diagX + radius > innerWidth || diagX-radius < 0){
+        //     xVelocity = -xVelocity
+        // }
+        // if(diagY + radius > innerHeight || diagY - radius < 0){
+        //     yVelocity = -yVelocity
+        // }
+        // diagX += xVelocity;
+        // diagY += xVelocity
         
     }
        diagonal();
