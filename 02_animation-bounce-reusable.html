@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Canvas</title>
+    <!-- CSS -->
+    <style>
+        *{
+            margin :0;
+        }
+        canvas{
+            background-color: violet;
+        }
+    </style>
+</head>
+<body>
+    <!-- HTML -->
+    <canvas>
+
+    </canvas>
+    <!-- JS -->
+    <script>
+        var canvas = document.querySelector('canvas');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        var c = canvas = canvas.getContext('2d');
+
+       //    reuseable code /  function
+       function Circle(diagX,diagY,radius,xVelocity,yVelocity){
+        this.diagX = diagX;
+        this.diagY = diagY;
+        this.radius = radius;
+        this.xVelocity = xVelocity;
+        this.yVelocity = yVelocity;
+        this.draw =()=>{
+            c.beginPath();
+            c.arc(this.diagX,this.diagY,this.radius,0,Math.PI*2,false);
+            c.strokeStyle = "pink"
+            c.stroke()
+        }
+        this.update =()=>{
+            if(this.diagX + this.radius > innerWidth || this.diagX - this.radius < 0){
+                this.xVelocity = -this.xVelocity;
+            }
+            if(this.diagY + this.radius > innerHeight || this.diagY - this.radius < 0){
+                this.yVelocity = -this.yVelocity
+            }
+            this.diagX += this.xVelocity;   
+            this.diagY += this.yVelocity;
+
+            this.draw()
+        }
+    }
+    
+    var circle = new Circle(200,200,50,6,6);
+
+    var circleArray = [];
+
+    for (var i = 0 ; i<100; i++){
+            var diagX = Math.random() * innerWidth;
+            var diagY = Math.random() *  innerHeight;
+            var radius = 10;
+            var xVelocity = (Math.random() -0.5 )*4 ;
+            var yVelocity = (Math.random() -0.5 )*4 ;
+     circleArray.push(new Circle(diagX,diagY,radius,xVelocity,yVelocity))
+    }
+
+    console.log(circleArray);
+
+       diagonal=()=>{
+        requestAnimationFrame(diagonal);
+        c.clearRect(0,0,innerWidth,innerHeight);
+        //call draw & update function where inside fo circle function
+        circle.update()
+
+        for(var i = 0; i<circleArray.length; i++){
+
+            circleArray[i].update();
+        }
+
+        c.beginPath();
+        c.arc(diagX,diagY,radius,0,Math.PI*2,false);
+        c.strokeStyle = "White";
+        c.stroke()
+        
+    }
+       diagonal();
+
+       
+
+    </script>
+</body>
+</html>

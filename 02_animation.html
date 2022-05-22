@@ -68,15 +68,47 @@
        }
        bounce()
 
-    //    ad more condition radius
+       //    reuseable code /  function
+       function Circle(diagX,diagY,radius,xVelocity,yVelocity){
+        this.diagX = diagX;
+        this.diagY = diagY;
+        this.radius = radius;
+        this.xVelocity = xVelocity;
+        this.yVelocity = yVelocity;
+        this.draw =()=>{
+            c.beginPath();
+            c.arc(this.diagX,this.diagY,this.radius,0,Math.PI*2,false);
+            c.strokeStyle = "black"
+            c.stroke()
+        }
+        this.update =()=>{
+            if(this.diagX + this.radius > innerWidth || this.diagX-this.radius < 0){
+            this.xVelocity = -this.xVelocity
+        }
+        if(this.diagY + this.radius > innerHeight || this.diagY - this.radius < 0){
+            this.yVelocity = -this.yVelocity
+        }
+        this.diagX += this.xVelocity;
+        this.diagY += this.xVelocity
 
-       var diagX =  Math.random() * innerWidth;
-       var diagY = Math.random() *  innerHeight;
-       var xVelocity = (Math.random() -0.5 )*5 ;
-       var yVelocity = (Math.random() -0.5 )*5 ;
-       var radius = 30;
+            this.draw()
+        }
+    }
+    var circle = new Circle(200,200,50,6,6);
+
+   // circle.draw(); //since the function is out of requestAnimationFrame, It's deleted. put this function inside of animation 
+
+    //    var diagX =  Math.random() * innerWidth;
+    //    var diagY = Math.random() *  innerHeight;
+    //    var xVelocity = (Math.random() -0.5 )*5 ;
+    //    var yVelocity = (Math.random() -0.5 )*5 ;
+    //    var radius = 30;
        diagonal=()=>{
         requestAnimationFrame(diagonal);
+        c.clearRect(0,0,innerWidth,innerHeight);
+        //call draw & update function where inside fo circle function
+        circle.draw()
+        circle.update()
         c.beginPath();
         c.arc(diagX,diagY,radius,0,Math.PI*2,false);
         c.strokeStyle = "green";
@@ -92,8 +124,10 @@
         diagY += xVelocity
         
     }
-
        diagonal();
+
+       
+
     </script>
 </body>
 </html>
