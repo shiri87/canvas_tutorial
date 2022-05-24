@@ -40,6 +40,8 @@
             c.beginPath();
             c.arc(this.diagX,this.diagY,this.radius,0,Math.PI*2,false);
             c.strokeStyle = "pink"
+            c.fillStyle = "white"
+            c.fill()
             c.stroke()
         }
         this.update =()=>{
@@ -61,9 +63,9 @@
     var circleArray = [];
 
     for (var i = 0 ; i<100; i++){
-            var diagX = Math.random() * innerWidth;
-            var diagY = Math.random() *  innerHeight;
-            var radius = 10;
+            var diagX = Math.random() * (innerWidth - radius*2) + radius;
+            var diagY = Math.random() *  (innerHeight - radius *2) + radius;
+            var radius = 20;
             var xVelocity = (Math.random() -0.5 )*4 ;
             var yVelocity = (Math.random() -0.5 )*4 ;
      circleArray.push(new Circle(diagX,diagY,radius,xVelocity,yVelocity))

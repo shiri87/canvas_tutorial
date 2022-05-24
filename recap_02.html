@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        *{
+            background-color: black;
+        }
+        h1{
+            color: aliceblue;
+            text-transform: capitalize;
+        }
+    </style>
+
+    <canvas>
+        <h1>canvas</h1>
+    </canvas>
+
+    <script>
+        // canvas java script
+        var canvas = document.querySelector('canvas');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        var c = canvas.getContext('2d');
+        //get color
+        var randomColor =  "#"+ Math.floor(Math.random()*0xFFFFFF).toString(16)
+
+        c.fillStyle= randomColor
+        c.fillRect(300,300,100,100)
+        c.fillRect(500,1000,50,50)
+
+        // moveObject()
+        
+        var bounceX = Math.random()*innerWidth;
+        var bounceY = Math.random()*innerHeight;
+        var radius = 20
+        var bounceVelocityX = (Math.random()-0.5)*10;
+        var bounceVelocityY = (Math.random()-0.5)*10;
+        
+        bounce=()=>{
+            requestAnimationFrame(bounce)
+            c.clearRect(0,0,innerWidth,innerHeight)
+            c.beginPath();
+            c.strokeStyle = randomColor;
+            c.arc(bounceX,bounceY,radius,0,Math.PI*2,false);
+            c.stroke()
+            if(bounceX + radius > innerWidth || bounceX + radius < 0){
+               bounceVelocityX = -bounceVelocityX
+               if(bounceY + radius > innerHeight || bounceY + radius < 0){
+                   bounceVelocityY = -bounceVelocityY
+                }
+            }    
+            bounceX += bounceVelocityX;
+            bounceY += bounceVelocityY;
+        }
+        bounce();
+                </script>
+</body>
+</html>

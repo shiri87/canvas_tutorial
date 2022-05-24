@@ -29,68 +29,61 @@
         canvas.height = window.innerHeight;
 
         var c = canvas.getContext('2d');
-
-        //drawing rectangle
-        c.fillStyle = "#ffffff"
-        c.fillRect(100, 100, 100, 100);
-
-        c.beginPath()
-        c.arc(200,100,100,300,Math.PI*2,false)
-        c.strokeStyle = "#fff"
-        c.stroke()
-
         //get color
         var randomColor =  "#"+ Math.floor(Math.random()*0xFFFFFF).toString(16)
 
-        c.fillStyle= randomColor
-        c.fillRect(300,300,100,100)
 
-        c.fillRect(500,1000,50,50)
-
-        // movement
-        var x = 500;
-        var y = 500
-        var dx = 1
-        var dy = 1
-        function moveObject(){
-            requestAnimationFrame(moveObject)
-            c.clearRect(0, 0, innerWidth, innerHeight)
-            c.beginPath();
-            c.strokeStyle = "red"
-            c.strokeRect(x,y,20,20)
-            
-            if(x > innerWidth){
-            dx = -dx
-                if(y > innerHeight){
-                    dy = -dy    
-                }
-            }
-            x += dx
-            y += dy
-        }
-        moveObject()
+        // variable -random setting
+        var x = Math.random()*innerWidth;
+        var y = Math.random()*innerHeight;
+        var radius = 50
+        var dx = (Math.random()-0.5)*10;
+        var dy = (Math.random()-0.5)*10;
         
-        var bounceX = Math.random()*innerWidth;
-        var bounceY = Math.random()*innerHeight;
-        var radius = 10
-        var bounceVelocityX = (Math.random()-0.5)*10;
-        var bounceVelocityY = (Math.random()-0.5)*10;
-        bounce=()=>{
-            requestAnimationFrame(bounce)
-            c.beginPath();
-            c.strokeStyle = randomColor;
-            c.arc(bounceX,bounceY,radius,0,Math.PI*2,false);
-            c.stroke()
-               if(bounceX+radius > innerWidth || bounceX + radius < 0){
-               bounceVelocityX = -bounceVelocityX
-               if(bounceY+radius > innerHeight || bounceY + radius < 0){
-                   bounceVelocityY = -bounceVelocityY
+        function Circle(x,y,radius,dx,dy){
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+            this.dx = dx;
+            this.dy = dy;
+            c.strokeStyle = "white"
+            this.draw=()=>{
+                c.beginPath()
+                c.arc(this.x,this.y,this.radius,0,Math.PI*2,false)
+                c.strokeStyle = randomColor
+                c.stroke()
+                        }
+            this.move=()=>{
+                if(this.x + this.radius > innerWidth || this.x - this.radius < 0){
+               this.dx = -this.dx
+               if(this.y + this.radius > innerHeight || this.y - this.radius < 0){
+                   this.dy = -this.dy
                 }
             }    
-                bounceX += bounceVelocityX;
-                bounceY += bounceVelocityY;
+            this.x += this.dx;
+            this.y += this.dy;
+            circle.draw()
+
+            }
+        }
+        //draw new circle with static value
+        var circle = new Circle(200,200,50,6,6);
+        //get arguments form variable (random)
+        var circle = new Circle(x,y,radius,dx,dy)
+
+        //array and for loop
+
+        bounce=()=>{
+            requestAnimationFrame(bounce)
+            c.clearRect(0,0,innerWidth,innerHeight)
+            circle.move()
+            // c.beginPath();
+            // c.strokeStyle = "gray";
+            // c.arc(x,y,radius,0,Math.PI*2,false);
+            // c.stroke()
         }
         bounce();
-        </script>
+
+                </script>
 </body>
 </html>
