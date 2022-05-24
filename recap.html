@@ -31,15 +31,8 @@
         var c = canvas.getContext('2d');
         //get color
         var randomColor =  "#"+ Math.floor(Math.random()*0xFFFFFF).toString(16)
+        c.fillStyle = "white"
 
-
-        // variable -random setting
-        var x = Math.random()*innerWidth;
-        var y = Math.random()*innerHeight;
-        var radius = 50
-        var dx = (Math.random()-0.5)*10;
-        var dy = (Math.random()-0.5)*10;
-        
         function Circle(x,y,radius,dx,dy){
             this.x = x;
             this.y = y;
@@ -62,25 +55,42 @@
             }    
             this.x += this.dx;
             this.y += this.dy;
-            circle.draw()
+            this.draw()
 
             }
         }
         //draw new circle with static value
         var circle = new Circle(200,200,50,6,6);
         //get arguments form variable (random)
-        var circle = new Circle(x,y,radius,dx,dy)
-
+        //var circle = new Circle(x,y,radius,dx,dy)
+        
         //array and for loop
+        var circleArray = [];
+        for(i=0; i < 100; i++)
+        {
+        // variable -random setting
+        var x = Math.random()*(innerWidth-radius * 2)+radius;
+        var y = Math.random()*(innerHeight-radius*2)+radius;
+        var radius = 20
+        var dx = (Math.random()-0.5)*10;
+        var dy = (Math.random()-0.5)*10;
+        circleArray.push(new Circle(x,y,radius,dx,dy))
+        }
 
         bounce=()=>{
             requestAnimationFrame(bounce)
             c.clearRect(0,0,innerWidth,innerHeight)
             circle.move()
-            // c.beginPath();
-            // c.strokeStyle = "gray";
-            // c.arc(x,y,radius,0,Math.PI*2,false);
-            // c.stroke()
+            c.beginPath();
+            c.strokeStyle = "white";
+            c.arc(x,y,radius,0,Math.PI*2,false);
+            c.stroke()
+            c.fill()
+
+            //calling circles where are in the array
+            for(i=0; i < circleArray.length; i++){
+             circleArray[i].move()
+            }
         }
         bounce();
 
