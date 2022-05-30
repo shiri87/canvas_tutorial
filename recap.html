@@ -76,6 +76,7 @@
             this.x += this.dx;
             this.y += this.dy;
             // interactivity
+            //여기 다시
             if(mouse.x - this.x < 50 && mouse.x - this.x > -50
             && mouse.y - this.x < 50 && mouse.y - this.x > -50){
             this.radius += 1;
@@ -113,6 +114,8 @@
             c.beginPath();
             c.strokeStyle = "white";
             c.arc(x,y,radius,0,Math.PI*2,false);
+            // c.fillText("Shiri",x,y)
+            // c.font("30px")
             c.stroke()
             c.fill()
             //calling circles where are in the array
