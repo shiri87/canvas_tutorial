@@ -57,7 +57,7 @@
            requestAnimationFrame(bounce)
            c.beginPath()
            c.arc(bx,by,30,0,Math.PI*2,false);
-        //    c.strokeStyle = "#"+Math.round(Math.random()*0xFFFFFF).toString(16);
+           c.strokeStyle = "#"+Math.round(Math.random()*0xFFFFFF).toString(16);
            c.strokeStyle = "red";
            c.stroke()
            if(by+radius > innerHeight || x-radius<0){
