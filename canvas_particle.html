@@ -53,14 +53,12 @@
         window.addEventListener("click", function(event){
             mouse.x = event.x;
             mouse.y = event.y;
-            // drawCircle();
         })
 
         //mouse move
         window.addEventListener('mousemove', function(event){
             mouse.y = event.y;
             mouse.x = event.x;
-            // drawCircle()
         })
 
         c.fillStyle = "white"
@@ -68,12 +66,14 @@
 
         function drawCircle(){
             c.beginPath();
-            
             c.fillStyle = "magenta"
             // //x,y,radius, start-angle, end angle -> radians 360 degrees = fullcircle
             c.arc(mouse.x,mouse.y,10,0, Math.PI*2)
             c.fill();
         }
+        //class
+
+
 
         //animation frame
         function animate(){
