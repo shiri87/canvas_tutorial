@@ -36,7 +36,7 @@
             canvas.height = window.innerHeight
             
         })
-
+        var hue = 0;
         var colorArray =[
             "rad","pink","purple","magenta","salmon","violet","darkred","gray","silver","orange","white"
         ]
@@ -53,59 +53,74 @@
         window.addEventListener("click", function(event){
             mouse.x = event.x;
             mouse.y = event.y;
+            for(var i = 0; i < 10; i++){ParticleArray.push(new Particle())}
         })
-
+        
         //mouse move
         window.addEventListener('mousemove', function(event){
             mouse.y = event.y;
             mouse.x = event.x;
+            for(var i = 0; i < 1; i++){ParticleArray.push(new Particle())}
         })
 
         c.fillStyle = "white"
         c.fillRect(100, 100, 100, 100);
-
-       const ParticleArray =[];
+        
+        const ParticleArray =[];
         //class
         class Particle{
-           constructor(){
-            this.x = Math.random()*window.innerWidth;
-            this.y = Math.random()*window.innerHeight;
-            // this.x = mouse.x;
-            // this.y = mouse.y;
-            this.radius = Math.random() *5 +1;
-            this.velocityX = Math.random() *3 -1.5;
-            this.velocityY = Math.random() *3 -1.5;
-        }
+            constructor(){
+                // this.x = Math.random()*window.innerWidth;
+                // this.y = Math.random()*window.innerHeight;
+                this.x = mouse.x;
+                this.y = mouse.y;
+                this.radius = Math.random() *15 +1;
+                this.velocityX = Math.random() *2 -1.5;
+                this.velocityY = Math.random() *2 -1.5;
+                this.color = 'hsl('+hue+', 100%, 50%)'
+            }
         update()
         {
             this.x += this.velocityX;
             this.y += this.velocityY;
+            if (this.size > 0.2) this.size -=0.1
         }
         draw(){
             c.beginPath();
             // //x,y,radius, start-angle, end angle -> radians 360 degrees = fullcircle
             c.arc(this.x,this.y,this.radius,0, Math.PI*2)
+            c.fillStyle = this.color;
             c.fill();
         }
         }
 
-        function init(){
-            for(var i = 0; i<100; i++){
-                ParticleArray.push(new Particle())
-            }
-        }
-        init()
+        // function init(){
+        //     for(var i = 0; i<100; i++){
+        //         ParticleArray.push(new Particle())
+        //     }
+        // }
+        // init()
 
         function handleParticles(){
             for (var i =0 ; i <ParticleArray.length; i++){
                 ParticleArray[i].update();
                 ParticleArray[i].draw();
+                if(ParticleArray[i].radius <= 0.3){
+                    //method adds and/or removes array elements.overwrites the original array.
+                    //check array and delete one element
+                    ParticleArray.splice(i, 1)
+                    i--;
+                }
             }
         }
 
         //animation frame
         function animate(){
-            c.clearRect(0,0,innerWidth,innerHeight);
+            // c.clearRect(0,0,innerWidth,innerHeight);
+            c.fillStyle = 'rgba(255,255,255,0.05)'
+            c.fillRect(0,0,window.innerWidth,window.innerHeight)
+            // can control speed
+            hue+=0.05 
             handleParticles()
             requestAnimationFrame(animate)
         }
