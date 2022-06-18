@@ -105,24 +105,34 @@
             for (var i =0 ; i <ParticleArray.length; i++){
                 ParticleArray[i].update();
                 ParticleArray[i].draw();
+                for(var j = i; j < ParticleArray.length; j++){
+                    //pythagorean theorem
+                    var dx= ParticleArray[i].x-ParticleArray[j].x
+                    var dy= ParticleArray[i].y-ParticleArray[j].y
+                    var distance = Math.sqrt(dx*dx+dy*dy)
+                if(distance < 100){
+                    c.beginPath()
+                    c.strokeStyle =ParticleArray[i].color;
+                    c.lineWidth = 0.5
+                    c.moveTo(ParticleArray[i].x, ParticleArray[i].y)
+                    c.lineTo(ParticleArray[j].x, ParticleArray[j].y)
+                    c.stroke()
+                }}
                 if(ParticleArray[i].radius <= 0.3){
                     //method adds and/or removes array elements.overwrites the original array.
                     //check array and delete one element
                     ParticleArray.splice(i, 1)
                     i--;
                 }
-                for(var j = i; j <ParticleArray.length; j++){
-                    //pythagorean theorem
                     
-                }
             }
         }
 
         //animation frame
         function animate(){
-            // c.clearRect(0,0,innerWidth,innerHeight);
-            c.fillStyle = 'rgba(255,255,255,0.05)'
-            c.fillRect(0,0,window.innerWidth,window.innerHeight)
+            c.clearRect(0,0,innerWidth,innerHeight);
+            // c.fillStyle = 'rgba(255,255,255,0.05)'
+            // c.fillRect(0,0,window.innerWidth,window.innerHeight)
             // can control speed
             hue+=0.05 
             handleParticles()
