@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Canvas</title>
+    <!-- CSS -->
+    <style>
+        *{
+            margin :0;
+            padding: 0;
+            box-sizing:border-box;
+        }
+        body{
+            overflow: hidden;
+            background: black;
+        }
+
+        canvas{
+            position: absolute;
+            top:0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- HTML -->
+    <canvas id = "canvas">
+    </canvas>
+
+    
+    <!-- JS -->
+    <script>
+        var canvas = document.querySelector("canvas")
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        //or web GL
+        var c = canvas = canvas.getContext('2d');
+
+        var particleArray = [];
+        var adjustX = 10;
+        var adjustY = 20;
+
+        var mouse = {
+            x: undefined,
+            y: undefined,
+            radius : 150,
+        }
+
+        window.addEventListener('mousemove',function(event){
+            mouse.x = event.x;
+            mouse.y = event.y;
+        })
+
+        c.fillStyle = "white";
+        c.font = "30px Georgia";
+        //text, x, y
+        c.fillText("SHIRI", 0, 40);
+        var textCoordinate= c.getImageData(0,0,100,100);
+        
+        class Particle {
+            constructor(x, y, size){
+                this.x = x;
+                this.y = y;
+                // this.size = Math.random()*3;
+                this.size = 3;
+                this.baseX = x;
+                this.baseY = y;
+                this.dencity = (Math.random()*10)+1
+            }
+            draw(){
+                c.beginPath();
+                c.fillStyle = "lightgray"
+                c.lineWidth = 2
+                c.arc(this.x, this.y, this.size, Math.PI *2, false);
+                c.fill()
+            }
+            update(){
+                var dx =  mouse.x-this.x;
+                var dy =  mouse.y-this.y;
+                var distance = Math.sqrt(dx*dx + dy*dy);
+                var forceDirectionX = dx/distance;
+                var forceDirectionY = dy/distance;
+                var maxDistance = mouse.radius;
+                let force = (maxDistance - distance) / maxDistance;
+                //particle's movement speed.
+                let directionX = forceDirectionX * force *this.dencity;
+                let directionY = forceDirectionY * force *this.dencity;
+                if(distance < mouse.radius){
+                    //BLOW UP
+                    //this.size = 10;
+                    //shrinking 
+                    // this.x += forceDirectionX * 3
+                    //see the differentiation positive and negative
+                    // this.x += directionX
+                    this.x -= directionX
+                    this.y -= directionY
+                    
+                }else {
+                    if (this.x != this.baseX ||this.y !=this.baseY){
+                        var dx =this.x-this.baseX
+                        var dy =this.y-this.baseY
+                        this.x -=dx/10
+                        this.y -=dy/10
+                    }
+                }
+            }
+        }
+
+        
+        function init(){
+            particleArray = [];
+            //scan text effect
+            //we can put more than on variable inside a for loop
+            for(var y = 0, y2= textCoordinate.height; y< y2; y++){
+                for(var x =0, x2 =textCoordinate.width;x<x2; x++){
+                    //textCoordinate.height / width / data are properties on automatically  generated object we created by calling getImageData method
+                    if(textCoordinate.data[(y*4*textCoordinate.width)+(x*4)+3]> 128){
+                        var positionX = x +adjustX;
+                        var positionY = y +adjustY;
+                        particleArray.push(new Particle(positionX*
+                        10,positionY*10))
+                    }
+                }
+            }
+
+            //random particle
+            // for(var i = 0; i<500; i++){
+            //     var x = Math.random() * innerWidth;
+            //     var y = Math.random() * innerHeight;
+            //     particleArray.push(new Particle(x,y))
+            // }
+            //set a particle
+            // particleArray.push(new Particle(80,80))
+        }
+
+        function animate(){
+            c.clearRect(0, 0, innerWidth, innerHeight)
+            for(var i = 0; i < particleArray.length; i++){
+                particleArray[i].draw()
+                particleArray[i].update()
+            }
+            requestAnimationFrame(animate)
+        
+        }
+
+
+        init()
+        animate()
+
+        console.log('particleArray', particleArray)
+    </script>
+</body>
+</html>
