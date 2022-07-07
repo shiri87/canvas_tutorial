@@ -34,7 +34,7 @@
     
     <!-- JS -->
     <script>
-        var canvas = document.querySelector("canvas")
+       var canvas = document.querySelector("canvas")
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         //or web GL
@@ -58,7 +58,7 @@
         c.fillStyle = "white";
         c.font = "30px Georgia";
         //text, x, y
-        c.fillText("SHIRI", 0, 40);
+        c.fillText("Aa", 0, 40);
         var textCoordinate= c.getImageData(0,0,100,100);
         
         class Particle {
@@ -143,15 +143,40 @@
                 particleArray[i].draw()
                 particleArray[i].update()
             }
+            connectLine()
             requestAnimationFrame(animate)
-        
+                 
         }
-
+        //line on and off 
+        function connectLine(){
+       
+           var opacityValue = 1
+            for(var a = 0; a < particleArray.length; a++){
+                //we already calculated it
+                for(var b = a; b < particleArray.length; b++ ){
+                //var dx =  mouse.x-this.x;
+                //var dy =  mouse.y-this.y;
+                //var distance = Math.sqrt(dx*dx + dy*dy);
+                var dx =  particleArray[a].x - particleArray[b].x;
+                var dy =  particleArray[b].y - particleArray[b].y;
+                var distance = Math.sqrt(dx*dx + dy*dy);
+                if(distance < 10) { // those distance number shodled be the same
+                   opacityValue = 1-(distance/10)
+                   c.strokeStyle = "rgba(255,255,255," + opacityValue+")";
+                    c.lineWidth= 1
+                    c.beginPath();
+                    c.moveTo(particleArray[a].x, particleArray[a].y)
+                    c.lineTo(particleArray[b].x, particleArray[b].y)
+                    c.stroke()
+                    }
+                }
+            }     
+            console.log('connectLine')
+        }
 
         init()
         animate()
-
-        console.log('particleArray', particleArray)
+    // console.log('particleArray', particleArray)
     </script>
 </body>
 </html>
