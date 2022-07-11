@@ -17,12 +17,12 @@
             background: black;
         }
         canvas{
-            border: 5px solid white;
+            /* border: 5px solid white; */
             position: absolute;
             top:50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            height: 600px;
+            height: 700px;
             width:  380px;
         }
         
@@ -30,7 +30,7 @@
 </head>
 <body>
     <!-- HTML -->
-    <canvas id = "canvas">
+    <canvas id = "canvas" width="100" height="100">
         <!-- JS -->
         </canvas>
         <script>
@@ -41,7 +41,7 @@ myImage.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAADXCAYAAADsvPS
 let canvas = document.querySelector("canvas")
 var c = canvas = canvas.getContext('2d');
 
-        canvas.width = 300
+        canvas.width = 280
         canvas.height = 150
     myImage.addEventListener('load', function(){
         // canvas.width = window.innerWidth;
