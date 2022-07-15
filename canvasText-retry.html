@@ -18,10 +18,9 @@
         }
         canvas{
             position: absolute;
-            top:0;
+            top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            
         }
     </style>
 </head>
@@ -31,99 +30,78 @@
     </canvas>
     <!-- JS -->
     <script>
-        var canvas = document.querySelector("canvas")
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        //or web GL
-        var c = canvas = canvas.getContext('2d');
-        //preset
-        var colorArray = [
-            "pink",
-            "cyan",
-            "violet",
-            "gray",
-            "orange",
-        ]
+        const canvas = document.querySelector("#canvas")
+        const c = canvas.getContext("2d")
 
-        var color = colorArray[Math.floor(Math.random()*colorArray.length)]
-        var density
-
-        c.font = "50px Arial"
-        c.fillStyle = color
-        c.fillText("Shiri", innerWidth/2-50, innerHeight/2)
-        mouse = {
+        canvas.width = window.innerWidth
+        canvas.height = window.innerHeight
+        // events
+        window.addEventListener('load',function(){
+            init()
+        })
+        canvas.addEventListener("click",clickEvent)
+        
+        //variables
+        let mouse = {
             x:undefined,
             y:undefined,
-            radius:140,
+            radius:30
         }
         
-        window.addEventListener("mousemove",function(event){
-            mouse.x = event.x;
-            mouse.y = event.y;
-            c.fillRect(mouse.x,mouse.y, 10,10)
-        })
-        var textCoordinate = c.getImageData(100,100,100,100)
-        
+        function loading(){
+            canvas.width = window.innerWidth
+            canvas.height = window.innerHeight
+            c.beginPath
+            c.fillStyle = "white"
+            c.fillRect(canvas.width/2-50,canvas.height/2-50,100,100);
+            c.fill();
+        }
+
+        function clickEvent(event){
+            x = event.x
+            y = event.y
+            c.beginPath()
+            c.strokeStyle = "gray"
+            c.arc(x,y,10,0,Math.PI*2,false)
+            c.stroke()
+        }  
+
+        let particleArray =[]
         class Particle{
             constructor(x,y,size){
-                this.x = x
-                this.y = y
-                this.baseX = x;
-                this.baseY = y;
-                this.density = density
-                this.size = 3
-                this.color = color
+                this.x = Math.random()* window.innerWidth
+                this.y = Math.random()* window.innerHeight
+                // this.x = x;
+                // this.y = y;
+                this.size = 5
+                this.xPos = Math.random()*0.5;
+                this.yPos = Math.random()*0.5;
             }
             draw(){
-                c.fillStyle = this.color
-                c.beginPath()
-                c.arc(this.x,this.y,this.size,Math.PI*2,false)
-                c.fill()
-                c.closePath()
+            c.beginPath();
+            c.fillStyle = "white"
+            c.arc(this.x,this.y,this.size,0,Math.PI*2,false)
+            c.fill()
+
             }
-            //mouse position -> interaction
             update(){
-                var dx= mouse-this.x;
-                var dy= mouse-this.y;
-                var distance = Math.sqrt(dx*dx + dy*dy);
-                if(distance<100){
-                    this.size = 10
-                }
-                else{
-                    this.size=3
-                }
-
+                draw();
+                this.x+=this.xPos
+                this.y+=this.yPos
             }
         }
+        // function init(){
+        //     for(let i =0; i<100;i++){
+        //     }
+        // }
+        // init()
+        particleArray.push(new Particle(50,50,5))
 
-        var particleArray = []
-        function init(){
-         
-            particleArray = []
-        for(let i=0; i<500;i++){
-            var x = Math.random()*innerWidth
-            var y = Math.random()*innerHeight
-            particleArray.push(new Particle(x,y))
-        }
-        particleArray.push(new Particle(20,20))
-        particleArray.push(new Particle(10,10))
-        particleArray.push(new Particle(0,0))
-        
-        }
-        
         function animate(){
-            c.clearRect(0,0, innerWidth,innerHeight)
-            for( i=0; i< particleArray.length; i++){
-                particleArray[i].draw()
-            }
-            requestAnimationFrame(animate)
-            c.fillText("Aa", innerWidth/2-50, innerHeight/2)
-
+            c.requestAnimationFrame(animate)
+            c.clearRect(0,0,canvas.width, canvas.height)
         }
-        
-        
-        init()
-        animate()
+        animate();
 
                 
        

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IMG</title>
+    <title>IMG-particle raining</title>
     <!-- CSS -->
     <style>
         *{
@@ -22,15 +22,15 @@
             top:50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            height: 700px;
-            width:  380px;
+            width:  300px;
+            height: 560px;
         }
         
     </style>
 </head>
 <body>
     <!-- HTML -->
-    <canvas id = "canvas" width="100" height="100">
+    <canvas id = "canvas" width="150" height="280">
         <!-- JS -->
         </canvas>
         <script>
@@ -41,8 +41,8 @@ myImage.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAADXCAYAAADsvPS
 let canvas = document.querySelector("canvas")
 var c = canvas = canvas.getContext('2d');
 
-        canvas.width = 280
-        canvas.height = 150
+        canvas.width = 150
+        canvas.height = 280
     myImage.addEventListener('load', function(){
         // canvas.width = window.innerWidth;
         // canvas.height = window.innerHeight;
