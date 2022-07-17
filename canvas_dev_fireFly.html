@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Canvas</title>
+    <title>firefly</title>
     <!-- CSS -->
     <style>
         *{
@@ -30,19 +30,19 @@
     </canvas>
     <!-- JS -->
     <script>
-        const canvas = document.querySelector("#canvas")
-        const c = canvas.getContext("2d")
+        var canvas = document.querySelector("#canvas")
+        var c = canvas.getContext("2d")
 
         canvas.width = window.innerWidth
         canvas.height = window.innerHeight
         // events
         window.addEventListener('load',function(){
-            init()
+            loading()
         })
         canvas.addEventListener("click",clickEvent)
         
         //variables
-        let mouse = {
+        var mouse = {
             x:undefined,
             y:undefined,
             radius:30
@@ -56,56 +56,65 @@
             c.fillRect(canvas.width/2-50,canvas.height/2-50,100,100);
             c.fill();
         }
-
+        
         function clickEvent(event){
-            x = event.x
-            y = event.y
-            c.beginPath()
-            c.strokeStyle = "gray"
-            c.arc(x,y,10,0,Math.PI*2,false)
-            c.stroke()
+            // x = event.x
+            // x = event.y
+            // c.beginPath()
+            // c.strokeStyle = "gray"
+            // c.arc(x,y,10,0,Math.PI*2,false)
+            // c.stroke()
+            //click -> 100 light will update
+            for(var i=0;i<10;i++){
+                circlesArray.push(new Circle())
+            }
         }  
-
-        let particleArray =[]
-        class Particle{
-            constructor(x,y,size){
-                this.x = Math.random()* window.innerWidth
-                this.y = Math.random()* window.innerHeight
+        
+        var circlesArray = []
+        class Circle{
+            constructor(x,y,size,color){
                 // this.x = x;
                 // this.y = y;
-                this.size = 5
-                this.xPos = Math.random()*0.5;
-                this.yPos = Math.random()*0.5;
+                this.x = Math.random()*window.innerWidth;
+                this.y = Math.random()*window.innerHeight;
+                this.size = size
+                this.dx = Math.random()*3 -1.5 
+                this.dy = Math.random()*3 -1.5 
+                this.color = color
             }
             draw(){
-            c.beginPath();
-            c.fillStyle = "white"
+            c.beginPath()
+            this.color = "green"
+            c.fillStyle = this.color
+            this.size = Math.random() *5
             c.arc(this.x,this.y,this.size,0,Math.PI*2,false)
             c.fill()
-
             }
             update(){
-                draw();
-                this.x+=this.xPos
-                this.y+=this.yPos
+
+                this.x += this.dx;
+                this.y += this.dy
             }
         }
-        // function init(){
-        //     for(let i =0; i<100;i++){
-        //     }
-        // }
-        // init()
-        particleArray.push(new Particle(50,50,5))
+
+        function init(){
+            for(var i = 0; i<100; i++){
+                circlesArray.push(new Circle())
+            }
+        }
+        init()
 
         function animate(){
-            c.requestAnimationFrame(animate)
-            c.clearRect(0,0,canvas.width, canvas.height)
+            c.clearRect(0,0,innerWidth,innerHeight)
+            for(var i = 0; i<circlesArray.length; i++){
+                circlesArray[i].update()
+                circlesArray[i].draw()
+            }
+            requestAnimationFrame(animate)
         }
-        animate();
+        animate()
 
-                
-       
-        
+
     </script>
     
 </body>
