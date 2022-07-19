@@ -36,11 +36,12 @@
         canvas.width = window.innerWidth
         canvas.height = window.innerHeight
         // events
-        window.addEventListener('load',function(){
-            loading()
+        window.addEventListener('resize',function(){
+            canvas.width = window.innerWidth
+            canvas.height = window.innerHeight
         })
         canvas.addEventListener("click",clickEvent)
-        
+        canvas.addEventListener("mousemove", mouseEvent)
         //variables
         var mouse = {
             x:undefined,
@@ -48,69 +49,114 @@
             radius:30
         }
         
-        function loading(){
-            canvas.width = window.innerWidth
-            canvas.height = window.innerHeight
-            c.beginPath
-            c.fillStyle = "white"
-            c.fillRect(canvas.width/2-50,canvas.height/2-50,100,100);
-            c.fill();
-        }
+   
+        var clickCheck = false
         
         function clickEvent(event){
-            // x = event.x
-            // x = event.y
+            mouse.x = event.x
+            mouse.x = event.y
             // c.beginPath()
             // c.strokeStyle = "gray"
             // c.arc(x,y,10,0,Math.PI*2,false)
             // c.stroke()
             //click -> 100 light will update
             for(var i=0;i<10;i++){
-                circlesArray.push(new Circle())
+                circlesArray.push(new Circle(mouse.x,mouse.y))
             }
+            clickCheck = true; 
+            
         }  
-        
+
+        function mouseEvent(event){
+            mouse.x = event.x
+            mouse.x = event.y
+                circlesArray.push(new Circle())
+            
+        }
+        function loading(){
+            c.beginPath()
+            c.fillStyle = "white"
+            
+            c.fillRect(canvas.width/2,canvas.height/2,100,100);
+            c.fill();
+            c.font = "15px Sanserif"
+            c.fillText(`fireFly` , canvas.width/2, canvas.height/2)
+            // c.fillText(`fireflies will fly away. When you click screen , you may find more fire flies`,mouse.x,mouse.y)
+            c.fillText("fireflies will fly away.",30,30)
+            c.fillText("When you click screen, you may find more fire flies",30,60)
+        }
         var circlesArray = []
+        var green = 155
         class Circle{
             constructor(x,y,size,color){
-                // this.x = x;
-                // this.y = y;
+                // this.x = mouse.x;
+                // this.y = mouse.y;
                 this.x = Math.random()*window.innerWidth;
                 this.y = Math.random()*window.innerHeight;
                 this.size = size
                 this.dx = Math.random()*3 -1.5 
                 this.dy = Math.random()*3 -1.5 
-                this.color = color
+                this.clickX = mouse.x;
+                this.clickY = mouse.y;
+                this.color = 'rgb(60,'+green+',100)' //60,177,100
             }
             draw(){
-            c.beginPath()
-            this.color = "green"
-            c.fillStyle = this.color
-            this.size = Math.random() *5
-            c.arc(this.x,this.y,this.size,0,Math.PI*2,false)
-            c.fill()
+                if(clickCheck==false){
+                    c.beginPath()
+                    c.fillStyle = 'rgb(60,'+green+',100)'
+                    this.size = Math.random() *5
+                    c.arc(this.x,this.y,this.size,0,Math.PI*2,false)
+                    c.fill()
+                    // console.log("draw if")
+                }else{
+                    c.beginPath()
+                    c.fillStyle = 'rgb(60,'+green+50+',100)'
+                    this.size = Math.random() *7
+                    c.arc(this.clickX,this.clickY,this.size,0,Math.PI*2,false)
+                    c.fill()
+                    // console.log("draw else")
+                }
+                console.log(clickCheck)
             }
-            update(){
-
-                this.x += this.dx;
-                this.y += this.dy
+            update(){    
+                if(clickCheck==false){
+                    this.x += this.dx;
+                    this.y += this.dy
+                    // console.log("update if")
+                    // return
+                }else{
+                    this.x += this.dx;
+                    this.y += this.dy
+                    this.clickX =this.x
+                    this.clickY = this.y
+                    // console.log("update else")
+                }
             }
         }
 
         function init(){
-            for(var i = 0; i<100; i++){
+            for(var i = 0; i<50; i++){
                 circlesArray.push(new Circle())
             }
         }
         init()
 
         function animate(){
+            loading()
             c.clearRect(0,0,innerWidth,innerHeight)
             for(var i = 0; i<circlesArray.length; i++){
                 circlesArray[i].update()
                 circlesArray[i].draw()
             }
             requestAnimationFrame(animate)
+            green++
+    
+            // console.log(circlesArray.length)
+            // if(circlesArray.Circle.x < 0){
+            //     console.log(circlesArray.length)
+            //     // circlesArray.Circle.splice(i,-1);
+            //     // i--
+            // }   
         }
         animate()
 
