@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sine waves</title>
+    <!-- CSS -->
+    <style>
+        *{
+            margin :0;
+            box-sizing: border-box;
+        }
+        canvas{
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <!-- HTML -->
+    <canvas id = "canvas">
+    </canvas>
+    <!-- JS -->
+    <script>
+        const canvas = document.querySelector("#canvas");
+        const c = canvas.getContext('2d')
+       
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        c.fillStyle = "gray"
+        c.fillRect(canvas.width/2,canvas.height/4,canvas.width/10,canvas.height/10);
+
+        c.beginPath()
+        c.moveTo(0, canvas.height/3)
+        c.lineTo(canvas.width, canvas.height/3)
+        c.stroke()        
+        
+        const wave = {
+            y : canvas.height/2,
+            length : 0.01,
+            amplitude : 100,
+            frequency : 0.01,
+        }
+
+        var increment = wave.frequency
+        var strokeColor ={
+            h:20,
+            s:50,
+            l:50,
+        }
+        var backgroundColor = {
+            r:0,
+            g:0,
+            b:0,
+            a:0.05
+        }
+        function animate(){
+            // c.clearRect(0,0,canvas.width,canvas.height)
+            c.fillStyle = `rgba(${backgroundColor.r},${backgroundColor.g},${backgroundColor.b},${backgroundColor.a})`
+            c.fillRect(0,0,canvas.width,canvas.height)
+            requestAnimationFrame(animate)
+            c.beginPath()
+            c.moveTo(0, canvas.height/2)
+            for(let i = 0; i < canvas.width; i++){
+                // c.lineTo(i, canvas.height/2) //diagonal line
+                c.lineTo(i, wave.y + Math.sin(i*wave.length + increment )*wave.amplitude)
+            }
+            // c.strokeStyle = 'hsl('+strokeColor.h+', '+strokeColor.s+'%, '+strokeColor.l+'%)'
+            c.strokeStyle = `hsl(${strokeColor.h},${strokeColor.s}%,${strokeColor.l}%)`
+            strokeColor.h++
+            // if(backgroundColor.r <255){
+            //     backgroundColor.r--
+            //     backgroundColor.g++
+            // }
+            // else if(backgroundColor.g < 255){
+            //     backgroundColor.g--
+            //     backgroundColor.b++
+            // }else{
+            //     backgroundColor.r++
+            //     backgroundColor.b--
+            // }
+
+            if(wave.amplitude <= canvas.height/3){
+                wave.amplitude--    
+            }else if(wave.amplitude > canvas.height)
+                wave.amplitude +=0.5
+            increment -= wave.frequency
+            c.stroke()  
+        }
+    animate()
+    </script>
+</body>
+</html>
