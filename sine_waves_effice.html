@@ -69,24 +69,34 @@
             // c.strokeStyle = 'hsl('+strokeColor.h+', '+strokeColor.s+'%, '+strokeColor.l+'%)'
             c.strokeStyle = `hsl(${strokeColor.h},${strokeColor.s}%,${strokeColor.l}%)`
             strokeColor.h++
-            // if(backgroundColor.r <255){
-            //     backgroundColor.r--
-            //     backgroundColor.g++
-            // }
-            // else if(backgroundColor.g < 255){
-            //     backgroundColor.g--
+            // if(backgroundColor.r <255 && backgroundColor.g<255){
             //     backgroundColor.b++
-            // }else{
-            //     backgroundColor.r++
-            //     backgroundColor.b--
+
+            // }
+            // else if(backgroundColor.g < 255 && backgroundColor.b >200){
+            //     backgroundColor.g++
             // }
 
             if(wave.amplitude <= canvas.height/3){
-                wave.amplitude--    
-            }else if(wave.amplitude > canvas.height)
-                wave.amplitude +=0.5
+                wave.amplitude+=0.5
+                wave.length -=0.0005
+                backgroundColor.r++
+            }else if(wave.length < 0){
+                wave.amplitude-=0.05
+                wave.length +=0.0005
+                backgroundColor.b++
+       
+            }else{
+                backgroundColor.g++
+                wave.y+=0.005
+                wave.length+=0.00005
+                wave.amplitude+=0.05
+                strokeColor.s+=0.5
+            }
+            
             increment -= wave.frequency
             c.stroke()  
+            console.log('wave', wave)
         }
     animate()
     </script>

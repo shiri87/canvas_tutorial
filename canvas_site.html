@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas web site</title>
+</head>
+    <!-- css -->
+    <style>
+        body{
+            background-color: black;
+        }
+        #cover-canvas{
+            position: fixed;
+            top:0;
+            left: 0;
+        }
+        .video-wrapper{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+        #video-file{
+            transform: scale(1);
+        }
+    </style>
+<body>
+    <!-- canvas -->
+    <div class="video-wrapper">
+        <!-- video -->
+        "></video>
+        <video id="video-file" muted="" playsinline="" autoplay="" loop="" src="https://images.apple.com/media/us/iphone-x/2017/01df5b43-28e4-4848-bf20-490c34a926a7/overview/primary/hero/large_2x.mp4" style="transform: scale(1);"
+    </div>
+    <canvas id="cover-canvas" width="" height="">
+    </canvas>
+
+     <!-- Javascript -->
+     <script>
+       
+        (function(){
+            var 
+            elemBody,
+            elemCanvas,
+            elemVideo,
+            elemPhone,
+            c, //context
+            windowWidth = 0,
+            windowHeight = 0,
+            canvasWidth = 0,
+            canvasHeight = 0,
+            scrollY = 0,
+            relativeScrollY = 0,
+            prevDurations = 0, // total height
+            totalScrollHeight = 0,
+            currentKryFrame = 0,
+            phoneWidth = 1280,
+            phoneHeight = 300,
+
+             
+            scrollHandler,
+            render,
+            drawCanvas,
+            calAnimationValue,
+            calcFinialValue,
+            pixieDuration = 0, //keyframe's pixie 1/2 of screen
+            keyframe = [{
+
+                animationValues:{
+
+                },
+                animationValues : {
+
+                },
+                },
+            ] 
+        elemBody =  document.body,
+        elemCanvas = document.querySelector("#cover-canvas")
+        c = elemCanvas.getContext("2d")
+        elemVideo = document.getElementById("video-file")
+        
+        function init (){
+            windowWidth = window.innerWidth;
+            windowHeight = window.innerHeight;
+        }
+
+        function resizeHAndler(){
+
+        }
+        resizeHandler();
+        render()
+        
+    })
+    init()
+     </script>
+</body>
+</html>
